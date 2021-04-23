@@ -7,12 +7,15 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { api } from "../../services/api";
 import { convertDurationToTimeString } from "../../utils/convertDurationToTimeString";
 import { Episode } from "../../utils/types";
+import { usePlayer } from "../../contexts/PlayerContext";
 
 type EpisodeProps = {
   episode: Episode;
 };
 
 export default function EpisodePage({ episode }: EpisodeProps) {
+  const { play } = usePlayer();
+
   return (
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
@@ -27,7 +30,7 @@ export default function EpisodePage({ episode }: EpisodeProps) {
           src={episode.thumbnail}
           objectFit="cover"
         />
-        <button type="button">
+        <button type="button" onClick={() => play(episode)}>
           <img src="/play.svg" alt="Tocar episódio" />
         </button>
       </div>
